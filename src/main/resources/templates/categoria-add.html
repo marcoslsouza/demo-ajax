@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<div class="corpo" layout:fragment="corpo">
+
+    <div id="loader-form" class="pre-load"></div>
+
+    <form id="form-add-categoria" action="#">
+
+        <div id="alert"></div>
+
+        <div class="form-group">
+            <label for="linkPromocao">Categoria</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" />
+            <small id="linkOferta" class="form-text text-muted">Insira a categoria.</small>
+            <div id="error-titulo" class=""></div>
+        </div>
+        
+        <div class="row p-3">
+            <button id="btn-og" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+            <span id="loader-img-btn"></span>
+        </div>
+    </form>
+
+</div>
+
+<script th:src="@{/js/categoria-add.js}" th:fragment="js"></script>
+</body>
+</html>
