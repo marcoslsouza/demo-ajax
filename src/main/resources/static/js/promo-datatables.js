@@ -4,7 +4,7 @@ $(document).ready(function() {
 	// https://cdnjs.com/ (cdn javascript)
 	moment.locale('pt-br');
 	
-	$("#table-server").DataTable({
+	let table = $("#table-server").DataTable({
 		processing:true,
 		serverSide: true,
 		responsive:true,
@@ -14,7 +14,7 @@ $(document).ready(function() {
 			data: "data"
 		},
 		columns: [
-			{data: 'id'},
+			{data: 'id', visible: false},
 			{data: 'titulo'},
 			{data: 'site'},
 			{data: 'linkPromocao'},
@@ -36,31 +36,59 @@ $(document).ready(function() {
 				id: 'btn-editar',
 				type: 'button'
 			},
+			enabled: false
 		},
 		{
 			text: 'Excluir',
 			attr: {
 				id: 'btn-excluir',
 				type: 'button'
-			}
+			},
+			enabled: false
 		}
 		]
+	});
+	
+	// marcar/desmarcar botoes ao clicar na ordenação
+	$('#table-server thead').on('click', 'tr', function() {
+		table.buttons().disable();
 	});
 	
 	$('#table-server tbody').on('click', 'tr', function() {
 		if($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
+			table.buttons().disable();
 		} else {
 			$('tr.selected').removeClass('selected'); // Procura por uma linha que tenha a classe selected, e ao encontrar será removida a classe selected.
 			$(this).addClass('selected');
+			table.buttons().enable();
 		}
 	});
 	
 	$('#btn-editar').on('click', function() {
-		alert('click no botão editar');
+		if(isSelectedRow()) {
+			$('#modal-form').modal('show');
+			//let id = getPromoId();
+			//alert('click no botão editar ' + id);
+		}
 	});
 	
 	$('#btn-excluir').on('click', function() {
-		alert('click no botão excluir');
+		if(isSelectedRow()) {
+			$('#modal-delete').modal('show');
+			//alert('click no botão excluir');
+		}
 	});
+	
+	function getPromoId() {
+		return table.row(table.$('tr.selected')).data().id;
+	}
+	
+	function isSelectedRow() {
+		let trow = table.row(table.$('tr.selected'));
+		return trow.data() !== undefined;
+	}
 });
+
+
+
