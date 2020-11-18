@@ -47,6 +47,15 @@ $(document).ready(function() {
 		]
 	});
 	
+	$('#table-server tbody').on('click', 'tr', function() {
+		if($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			$('tr.selected').removeClass('selected'); // Procura por uma linha que tenha a classe selected, e ao encontrar será removida a classe selected.
+			$(this).addClass('selected');
+		}
+	});
+	
 	$('#btn-editar').on('click', function() {
 		alert('click no botão editar');
 	});
