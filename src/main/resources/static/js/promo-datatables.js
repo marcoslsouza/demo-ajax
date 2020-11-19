@@ -73,11 +73,28 @@ $(document).ready(function() {
 		}
 	});
 	
+	// Abrir modal
 	$('#btn-excluir').on('click', function() {
 		if(isSelectedRow()) {
 			$('#modal-delete').modal('show');
 			//alert('click no botão excluir');
 		}
+	});
+	
+	// exclusão de uma promoção
+	$('#btn-del-modal').on('click', function() {
+		let id = getPromoId();
+		$.ajax({
+			method: 'GET',
+			url: '/promocao/delete/' + id,
+			success: function() {
+				$('#modal-delete').modal('hide');
+				table.ajax.reload();
+			},
+			error: function() {
+				alert('Ops... Ocorreu um erro, teste mais tarde.');
+			}
+		});
 	});
 	
 	function getPromoId() {
@@ -88,6 +105,8 @@ $(document).ready(function() {
 		let trow = table.row(table.$('tr.selected'));
 		return trow.data() !== undefined;
 	}
+	
+	
 });
 
 
