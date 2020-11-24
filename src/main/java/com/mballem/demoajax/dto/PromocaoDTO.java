@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 import com.mballem.demoajax.domain.Categoria;
 
@@ -28,8 +29,8 @@ public class PromocaoDTO {
 	@NotBlank(message = "Uma imagem é requerida")
 	private String linkImagem;
 	
-	@NotBlank(message = "O preco é requerido")
-	@NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,##0.00")
+	@NotNull(message = "O preco é requerido")
+	@NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
 	private BigDecimal preco;
 	
 	@NotNull(message = "Uma categoria é requerida")

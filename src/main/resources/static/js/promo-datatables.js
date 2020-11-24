@@ -99,6 +99,48 @@ $(document).ready(function() {
 		}
 	});
 	
+	$('#btn-edit-modal').on('click', function() {
+		let promo = {};
+		promo.descricao = $('#edt_descricao').val();
+		promo.preco = $('#edt_preco').val();
+		promo.titulo = $('#edt_titulo').val();
+		promo.categoria = $('#edt_categoria').val();
+		promo.linkImagem = $('#edt_linkImagem').val();
+		promo.id = $('#edt_id').val();
+		
+		$.ajax({
+			method: 'POST',
+			url: '/promocao/edit',
+			data: promo,
+			success: function() {
+				// Fecha o modal
+				$('#modal-form').modal('hide');
+				
+				// Atualiza a tabela
+				table.ajax.reload();
+			},
+			// Quando o formulario não passa na validação
+			statusCode: {
+				422: function(xhr) {
+					//console.log("status error:", xhr.status);
+					var errors = $.parseJSON(xhr.responseText); // Fazer o parse do documento recebido do Java, esse documento já vem convertido em JSON pela biblioteca Jakson
+					$.each(errors, function(key, val) {
+						$("#edt_"+key).addClass("is-invalid");
+						$("#error-"+key).addClass("invalid-feedback").append('<span class="error-span">'+val+'</span>'); // No caso, coloca dentro da tag div um span.
+					});
+				}
+			}
+			
+		});
+	});
+	
+	// Altera a imagem no componente <img> do modal
+	$('#edt_linkImagem').on('change', function() {
+		// recupera a nova url de imagem
+		let link = $(this).val();
+		$('#edt_imagem').attr('src', link);
+	});
+	
 	// Abrir modal
 	$('#btn-excluir').on('click', function() {
 		if(isSelectedRow()) {

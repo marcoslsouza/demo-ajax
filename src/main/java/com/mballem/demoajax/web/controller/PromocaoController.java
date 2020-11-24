@@ -129,7 +129,7 @@ public class PromocaoController {
 	
 	@PostMapping("/edit")
 	public ResponseEntity<?> editarPromocao(@Valid PromocaoDTO dto, BindingResult result) {
-		
+		log.info(dto.toString());
 		if(result.hasErrors()) {
 			Map<String, String> errors = new HashMap<>(); // Campo, mensagem
 			for(FieldError error : result.getFieldErrors()) {
