@@ -73,6 +73,10 @@ $(document).ready(function() {
 				method: 'GET',
 				url: '/promocao/edit/'+id,
 				beforeSend: function() {
+					// Removendo as mensagens
+					$("span").closest(".error-span").remove(); // Remove todas as span que possuem a classe error-span
+					$(".is-invalid").removeClass("is-invalid");
+					
 					$('#modal-form').modal('show');
 				},
 				success: function(data) {
@@ -112,6 +116,11 @@ $(document).ready(function() {
 			method: 'POST',
 			url: '/promocao/edit',
 			data: promo,
+			beforeSend: function() {
+				// Removendo as mensagens
+				$("span").closest(".error-span").remove(); // Remove todas as span que possuem a classe error-span
+				$(".is-invalid").removeClass("is-invalid");
+			},
 			success: function() {
 				// Fecha o modal
 				$('#modal-form').modal('hide');
